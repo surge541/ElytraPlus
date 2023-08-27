@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "me.surge.elytraplus.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "EntityMixin",
+        "LivingEntityMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "client": [
+        "InGameHudMixin"
+    ]
+}

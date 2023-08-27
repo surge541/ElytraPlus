@@ -1,0 +1,39 @@
+{
+    "schemaVersion": 1,
+    "id": "elytraplus",
+    "version": "${version}",
+    "name": "ElytraPlus",
+    "description": "Adds additional versions of Elytras",
+    "authors": [
+        "surge"
+    ],
+    "contact": {
+        "repo": "https://github.com/Wolfsurge/ElytraPlus"
+    },
+    "license": "unlicense",
+    "icon": "assets/elytraplus/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "client": [
+            {
+                "adapter": "kotlin",
+                "value": "me.surge.elytraplus.client.ElytraPlusClient"
+            }
+        ],
+
+        "main": [
+            {
+                "adapter": "kotlin",
+                "value": "me.surge.elytraplus.ElytraPlus"
+            }
+        ]
+    },
+    "mixins": [
+        "elytraplus.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${loader_version}",
+        "fabric": "*",
+        "minecraft": "${minecraft_version}"
+    }
+}
