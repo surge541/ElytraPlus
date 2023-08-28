@@ -1,7 +1,7 @@
 package me.surge.elytraplus.util
 
 import me.surge.elytraplus.ElytraPlus.MOD_ID
-import me.surge.elytraplus.duck.IInGameHud
+import me.surge.elytraplus.duck.DIGui
 import me.surge.elytraplus.enchantment.EPEnchantments
 import me.surge.elytraplus.enchantment.HoverEnchantment
 import net.minecraft.client.gui.GuiGraphics
@@ -15,8 +15,8 @@ object ElytraPlusRenderer {
     val HOVER_READY = ResourceLocation(MOD_ID, "textures/hover_ready.png")
 
     fun renderHUD(context: GuiGraphics) {
-        val scaledWidth = (mc.inGameHud as IInGameHud).scaledWidth
-        val scaledHeight = (mc.inGameHud as IInGameHud).scaledHeight
+        val scaledWidth = (mc.gui as DIGui).scaledWidth
+        val scaledHeight = (mc.gui as DIGui).scaledHeight
 
         if (EnchantmentHelper.getEnchantmentLevel(EPEnchantments.HOVER, mc.player) > 0) {
             context.setColor(1f, 1f, 1f, 0.5f)

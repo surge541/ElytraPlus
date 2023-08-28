@@ -1,6 +1,6 @@
 package me.surge.elytraplus.duck;
 
-public interface IInGameHud {
+public interface DIGui {
 
     int getScaledWidth();
     int getScaledHeight();

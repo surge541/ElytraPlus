@@ -1,6 +1,6 @@
 package me.surge.elytraplus.mixin;
 
-import me.surge.elytraplus.duck.IInGameHud;
+import me.surge.elytraplus.duck.DIGui;
 import me.surge.elytraplus.util.ElytraPlusRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
-public class GuiMixin implements IInGameHud {
+public class GuiMixin implements DIGui {
 
     @Shadow private int screenWidth;
 
