@@ -1,30 +1,47 @@
 package me.surge.elytraplus
 
 import me.surge.elytraplus.enchantment.EPEnchantments
-import me.surge.elytraplus.enchantment.HoverEnchantment
-import me.surge.elytraplus.key.EPKeybinds
-import me.surge.elytraplus.util.mc
+import me.surge.elytraplus.enchantment.WindRiderEnchantment
+import me.surge.elytraplus.util.PlayerManager.isHovered
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.Identifier
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.phys.Vec3
 
 object ElytraPlus : ModInitializer {
 
     const val MOD_ID = "elytraplus"
 
+    val elytraSpeedModifiers: Array<(LivingEntity, Vec3) -> Vec3> = arrayOf(
+        { entity, vec3d ->
+            return@arrayOf if (isHovered(entity)) {
+                vec3d.multiply(0.1, 0.1, 0.1)
+            } else {
+                vec3d
+            }
+        },
+
+        { entity, vec3d ->
+            return@arrayOf if (EnchantmentHelper.getEnchantmentLevel(EPEnchantments.WIND_RIDER, entity) > 0) {
+                val factor = WindRiderEnchantment.calculateSpeedMultiplier(entity).toDouble()
+                vec3d.multiply(factor, factor, factor)
+            } else {
+                vec3d
+            }
+        }
+    )
+
     /**
      * Runs the mod initializer.
      */
     override fun onInitialize() {
-        Registry.register(Registries.ENCHANTMENT, Identifier(MOD_ID, "hover"), EPEnchantments.HOVER)
+        EPEnchantments.EP_ENCHANTMENTS.forEach {
+            Registry.register(BuiltInRegistries.ENCHANTMENT, ResourceLocation(MOD_ID, it.translationName), it as Enchantment)
+        }
     }
 
 }

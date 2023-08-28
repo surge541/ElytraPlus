@@ -1,9 +1,10 @@
 package me.surge.elytraplus.mixin;
 
-import me.surge.elytraplus.util.PlayerManager;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.util.math.Vec3d;
+import kotlin.jvm.functions.Function2;
+import me.surge.elytraplus.ElytraPlus;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -11,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
 
-    @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V", ordinal = 2))
-    public void redirectTravel(LivingEntity instance, MovementType movementType, Vec3d vec3d) {
-        if (PlayerManager.INSTANCE.isHovered(instance)) {
-            vec3d = vec3d.multiply(0.1, 0.1, 0.1);
+    @Redirect(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V", ordinal = 2))
+    public void redirectTravel(LivingEntity instance, MoverType type, Vec3 vec3d) {
+        for (Function2<LivingEntity, Vec3, Vec3> elytraSpeedModifier : ElytraPlus.INSTANCE.getElytraSpeedModifiers()) {
+            vec3d = elytraSpeedModifier.invoke(instance, vec3d);
         }
 
-        instance.move(movementType, vec3d);
+        instance.move(type, vec3d);
     }
 
 }

@@ -1,6 +1,6 @@
 package me.surge.elytraplus.util
 
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 object PlayerManager {
 

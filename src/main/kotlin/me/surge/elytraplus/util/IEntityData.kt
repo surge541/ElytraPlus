@@ -1,9 +1,9 @@
 package me.surge.elytraplus.util
 
-import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.CompoundTag
 
 interface IEntityData {
 
-    fun getPersistentData(): NbtCompound
+    fun getPersistentData(): CompoundTag
 
 }

@@ -1,5 +1,5 @@
 package me.surge.elytraplus.util
 
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 
-val mc = MinecraftClient.getInstance()
+val mc = Minecraft.getInstance()

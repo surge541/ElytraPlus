@@ -1,18 +1,16 @@
 package me.surge.elytraplus.mixin;
 
 import me.surge.elytraplus.util.IEntityData;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -22,43 +20,34 @@ import static me.surge.elytraplus.ElytraPlus.MOD_ID;
 public abstract class EntityMixin implements IEntityData {
 
     @Shadow
-    public abstract Vec3d getVelocity();
+    public abstract Vec3 getDeltaMovement();
 
     @Shadow
-    public abstract void setVelocity(Vec3d velocity);
+    public abstract void setDeltaMovement(Vec3 velocity);
 
-    @Shadow protected abstract void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition);
-
-    private NbtCompound persistentData;
+    private CompoundTag persistentData;
 
     @NotNull
     @Override
-    public NbtCompound getPersistentData() {
+    public CompoundTag getPersistentData() {
         if (this.persistentData == null) {
-            this.persistentData = new NbtCompound();
+            this.persistentData = new CompoundTag();
         }
 
         return persistentData;
     }
 
-    @Inject(method = "writeNbt", at = @At("HEAD"))
-    protected void injectWriteMethod(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> info) {
+    @Inject(method = "saveWithoutId", at = @At("HEAD"))
+    protected void injectWriteMethod(CompoundTag nbt, CallbackInfoReturnable<CompoundTag> info) {
         if (persistentData != null) {
             nbt.put(MOD_ID, persistentData);
         }
     }
 
-    @Inject(method = "readNbt", at = @At("HEAD"))
-    protected void injectReadMethod(NbtCompound nbt, CallbackInfo info) {
+    @Inject(method = "load", at = @At("HEAD"))
+    protected void injectReadMethod(CompoundTag nbt, CallbackInfo info) {
         if (nbt.contains(MOD_ID, 10)) {
             persistentData = nbt.getCompound(MOD_ID);
-        }
-    }
-
-    @Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V"))
-    public void redirectFall(Entity instance, double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
-        if (!getPersistentData().getBoolean("hovered")) {
-            fall(heightDifference, onGround, state, landedPosition);
         }
     }
 
