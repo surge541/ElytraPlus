@@ -1,6 +1,7 @@
 package me.surge.elytraplus.client
 
 import me.surge.elytraplus.enchantment.HoverEnchantment
+import me.surge.elytraplus.enchantment.ThermalAscensionEnchantment
 import me.surge.elytraplus.key.EPKeybinds
 import me.surge.elytraplus.util.mc
 import net.fabricmc.api.ClientModInitializer
@@ -11,9 +12,11 @@ object ElytraPlusClient : ClientModInitializer {
 
     override fun onInitializeClient() {
         KeyBindingHelper.registerKeyBinding(EPKeybinds.HOVER)
+        KeyBindingHelper.registerKeyBinding(EPKeybinds.THERMAL_ASCENSION)
 
         ClientTickEvents.START_WORLD_TICK.register {
             HoverEnchantment.updateHoverStatus(mc.player!!)
+            ThermalAscensionEnchantment.updateAscensionStatus(mc.player!!)
         }
     }
 

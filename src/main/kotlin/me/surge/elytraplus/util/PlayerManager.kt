@@ -21,6 +21,23 @@ object PlayerManager {
         (entity as IEntityData).getPersistentData().putInt("hoverCooldown", hoverCooldown)
     }
 
+    fun getThermalAscensionCooldown(entity: LivingEntity): Int {
+        if (!(entity as IEntityData).getPersistentData().contains("thermalAscensionCooldown")) {
+            entity.getPersistentData().putInt("thermalAscensionCooldown", 0)
+            return 0
+        }
+
+        return (entity as IEntityData).getPersistentData().getInt("thermalAscensionCooldown")
+    }
+
+    fun setThermalAscensionCooldown(entity: LivingEntity, hoverCooldown: Int) {
+        if (!(entity as IEntityData).getPersistentData().contains("thermalAscensionCooldown")) {
+            entity.getPersistentData().putInt("thermalAscensionCooldown", hoverCooldown)
+        }
+
+        (entity as IEntityData).getPersistentData().putInt("thermalAscensionCooldown", hoverCooldown)
+    }
+
     fun isHovered(entity: LivingEntity): Boolean {
         if (!(entity as IEntityData).getPersistentData().contains("hovered")) {
             entity.getPersistentData().putBoolean("hovered", false)

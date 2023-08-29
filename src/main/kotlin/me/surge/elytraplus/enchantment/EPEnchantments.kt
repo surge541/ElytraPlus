@@ -10,6 +10,9 @@ object EPEnchantments {
     @JvmField
     val WIND_RIDER = WindRiderEnchantment()
 
-    val EP_ENCHANTMENTS: Array<IEPEnchantment> = arrayOf(HOVER, WIND_RIDER)
+    @JvmField
+    val THERMAL_ASCENSION = ThermalAscensionEnchantment()
+
+    val EP_ENCHANTMENTS: Array<IEPEnchantment> = arrayOf(HOVER, WIND_RIDER, THERMAL_ASCENSION)
 
 }
