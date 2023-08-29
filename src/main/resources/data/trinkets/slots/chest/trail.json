@@ -1,0 +1,13 @@
+{
+    "icon": "elytraplus:trail_trinket",
+    "drop_rule": "keep",
+    "validator_predicates": [
+        "elytraplus:elytra_trail_predicate"
+    ],
+    "quick_move_predicates": [
+        "trinkets:relevant"
+    ],
+    "tooltip_predicates": [
+        "trinkets:relevant"
+    ]
+}

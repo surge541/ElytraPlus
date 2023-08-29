@@ -18,6 +18,8 @@ class HoverEnchantment : Enchantment(Rarity.RARE, EnchantmentCategory.ARMOR_CHES
     override fun getMaxLevel() = 3
 
     override fun canEnchant(stack: ItemStack) = stack.item is ElytraItem
+    override fun isTreasureOnly() = true
+    override fun isTradeable() = false
 
     companion object {
 

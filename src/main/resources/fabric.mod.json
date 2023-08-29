@@ -11,7 +11,7 @@
         "repo": "https://github.com/Wolfsurge/ElytraPlus"
     },
     "license": "unlicense",
-    "icon": "assets/elytraplus/icon.png",
+    "icon": "assets/elytraplus/textures/icon.png",
     "environment": "*",
     "entrypoints": {
         "client": [
@@ -34,6 +34,9 @@
     "depends": {
         "fabricloader": ">=${loader_version}",
         "fabric": "*",
-        "minecraft": "${minecraft_version}"
+        "minecraft": "${minecraft_version}",
+        "fabric-language-kotlin": ">=1.10.10+kotlin.1.9.10",
+        "lootify": ">=0.1.2+1.20.1",
+        "trinkets": ">=3.7.1"
     }
 }

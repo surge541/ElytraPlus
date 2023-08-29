@@ -12,6 +12,21 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven { url 'https://maven.quiltmc.org/repository/release/' }
+    maven { url 'https://jitpack.io' }
+
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+
+    maven {
+        name = "Ladysnake Libs"
+        url = 'https://maven.ladysnake.org/releases'
+    }
+
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
@@ -28,6 +43,10 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // mod dependencies
+    modImplementation name: 'lootify-0.1.2+1.20.1'
+    modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.10'
 }

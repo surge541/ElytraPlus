@@ -1,9 +1,13 @@
 package me.surge.elytraplus
 
+import dev.emi.trinkets.api.TrinketsApi
 import me.surge.elytraplus.enchantment.EPEnchantments
 import me.surge.elytraplus.enchantment.WindRiderEnchantment
+import me.surge.elytraplus.util.ElytraTrailHandler
 import me.surge.elytraplus.util.PlayerManager.isHovered
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.fabricmc.fabric.api.util.TriState
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -39,8 +43,20 @@ object ElytraPlus : ModInitializer {
      * Runs the mod initializer.
      */
     override fun onInitialize() {
+        ServerTickEvents.START_WORLD_TICK.register { level ->
+            level.players().forEach { ElytraTrailHandler.spawn(it, level) }
+        }
+
         EPEnchantments.EP_ENCHANTMENTS.forEach {
             Registry.register(BuiltInRegistries.ENCHANTMENT, ResourceLocation(MOD_ID, it.translationName), it as Enchantment)
+        }
+
+        TrinketsApi.registerTrinketPredicate(ResourceLocation(MOD_ID, "elytra_trail_predicate")) { stack, slot, entity ->
+            if (stack.item in ElytraTrailHandler.trailItems) {
+                TriState.TRUE
+            } else {
+                TriState.FALSE
+            }
         }
     }
 
