@@ -15,10 +15,12 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.phys.Vec3
+import org.apache.logging.log4j.LogManager
 
 object ElytraPlus : ModInitializer {
 
     const val MOD_ID = "elytraplus"
+    val LOGGER = LogManager.getLogger(MOD_ID)
 
     val elytraSpeedModifiers: Array<(LivingEntity, Vec3) -> Vec3> = arrayOf(
         { entity, vec3d ->

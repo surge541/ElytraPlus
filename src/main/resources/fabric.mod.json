@@ -36,7 +36,6 @@
         "fabric": "*",
         "minecraft": "${minecraft_version}",
         "fabric-language-kotlin": ">=1.10.10+kotlin.1.9.10",
-        "lootify": ">=0.1.2+1.20.1",
-        "trinkets": ">=3.7.1"
+        "trinkets": ">=3.8.0"
     }
 }

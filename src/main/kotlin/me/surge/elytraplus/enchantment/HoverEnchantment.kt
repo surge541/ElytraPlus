@@ -24,7 +24,7 @@ class HoverEnchantment : Enchantment(Rarity.RARE, EnchantmentCategory.ARMOR_CHES
     companion object {
 
         // 10 Seconds (20 ticks/second, 200)
-        private const val COOLDOWN_ORIGINAL = 200
+        const val COOLDOWN_ORIGINAL = 200
 
         fun updateHoverStatus(player: Player) {
             PlayerManager.setHovered(player as IEntityData, canHover(player) && EPKeybinds.HOVER.isDown)
